@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { selectorElement, loader, error, catInfo } from "./elements";
 
 const hiddenClass = 'hidden';
@@ -18,12 +19,12 @@ function showSelectorElement() {
     removeClass(selectorElement, hiddenClass);
 }
 
-function showError() { 
-    removeClass(error, hiddenClass);
+function showError() {
+    Notify.failure(error.textContent, () => { });
 }
 
 function hideError() { 
-    addClass(error, hiddenClass);
+    // addClass(error, hiddenClass);
 }
 
 function showLoader() {
