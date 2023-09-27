@@ -6,3 +6,12 @@ export function fetchBreeds() {
     return fetch('https://api.thecatapi.com/v1/breeds')
         .then(response => response.json());
 }
+
+export function fetchCatByBreed(breedId) {
+    const searchParams = new URLSearchParams({
+        breed_ids: breedId,
+    });
+
+    return fetch(`https://api.thecatapi.com/v1/images/search?${searchParams}`)
+        .then(response => response.json());   
+}

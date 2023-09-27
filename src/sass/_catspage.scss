@@ -4,3 +4,13 @@
 .error {
     color: red;
 }
+.cat-info-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin: 20px;
+
+    img {
+        max-width: 600px;
+    }
+}
