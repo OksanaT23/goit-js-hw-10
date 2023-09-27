@@ -1,4 +1,7 @@
 import { fetchBreeds, fetchCatByBreed } from "./cat-api";
+import SlimSelect from 'slim-select';
+
+import "slim-select/dist/slimselect.css";
 
 const selectorElement = document.querySelector('select.breed-select');
 const loader = document.querySelector('p.loader');
@@ -37,7 +40,11 @@ fetchBreeds()
         const selectorHtml = data.map(breedData => `<option value="${breedData.id}">${breedData.name}</option>`).join('');
 
         selectorElement.insertAdjacentHTML('beforeend', selectorHtml);
-        selectorElement.style.display = 'inline-block';
+        selectorElement.style.display = 'block';
+
+        new SlimSelect({
+            select: '.breed-select'
+        });
     })
     .catch(showError)
     .finally(hideLoader);
