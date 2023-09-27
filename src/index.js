@@ -3,23 +3,46 @@ import SlimSelect from 'slim-select';
 
 import "slim-select/dist/slimselect.css";
 
+const hiddenClass = 'hidden';
 const selectorElement = document.querySelector('select.breed-select');
 const loader = document.querySelector('p.loader');
 const error = document.querySelector('p.error');
 const catInfo = document.querySelector('div.cat-info');
 let breedsData = [];
 
+function addClass(element, className) {
+    if (!element.classList.contains(className)) {
+        element.classList.add(className);
+    }
+}
+
+function removeClass(element, className) {
+    if (element.classList.contains(className)) {
+        element.classList.remove(className);
+    }
+}
+
+function showSelectorElement() {
+    removeClass(selectorElement, hiddenClass);
+}
+
 function showError() { 
-    error.style.display = 'block';
+    removeClass(error, hiddenClass);
 }
 function hideError() { 
-    error.style.display = 'none';
+    addClass(error, hiddenClass);
 }
 function showLoader() {
-    loader.style.display = 'block';
+    removeClass(loader, hiddenClass);
 }
 function hideLoader() {
-    loader.style.display = 'none';
+    addClass(loader, hiddenClass);
+}
+function showCatInfo() { 
+    removeClass(catInfo, hiddenClass);
+}
+function hideCatInfo() {
+    addClass(catInfo, hiddenClass);
 }
 
 function getBreedData(breedId) {
@@ -40,7 +63,8 @@ fetchBreeds()
         const selectorHtml = data.map(breedData => `<option value="${breedData.id}">${breedData.name}</option>`).join('');
 
         selectorElement.insertAdjacentHTML('beforeend', selectorHtml);
-        selectorElement.style.display = 'block';
+
+        showSelectorElement();
 
         new SlimSelect({
             select: '.breed-select'
@@ -52,9 +76,8 @@ fetchBreeds()
 selectorElement.addEventListener('change', event => {
     const breedId = selectorElement.value;
 
-    catInfo.style.display = 'none';
-    
     hideError();
+    hideCatInfo();
     showLoader();
 
     fetchCatByBreed(breedId)
@@ -79,7 +102,8 @@ selectorElement.addEventListener('change', event => {
                     </div>
                 </div>
             `;
-            catInfo.style.display = 'block';
+            
+            showCatInfo();
         })
         .catch(showError)
         .finally(hideLoader);
